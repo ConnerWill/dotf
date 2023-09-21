@@ -56,26 +56,6 @@ fi
 
 ###}}} COLORS
 
-  ###{{{ commented out
-  # opterr() { printf >&2 "%s:${colors[reset]}${colors[Blue]}%s ${colors[yellow]}%s${colors[reset]}" "${1}" "${2}" "${3}"; printf "%s\n" $usage && return 1; }
-  #
-  # while (( $# )); do
-  #   case $1 in
-  #     --)                 shift; printstring+=("${@[@]}"); break ;;
-  #     -h|--help|h|help)          printf "%s\n" $usage && return         ;;
-  #     -A|--all|A|all|add-all)          shift; fill=${1}                         ;;
-  #     -u|--up|u|up|upload)          shift; fill=${1}                         ;;
-  #     -u=*|--up=*|--upload=*)      fill="${1#*=}"                         ;;
-  #     -a|a|--add|add)      shift; surround=${1}                     ;;
-  #     -a=*|--add=*)      fill="${1#*=}"                         ;;
-  #     -*)                 opterr "${0}" "Unknowm option:" ${1} && printf "%s\n" $usage && return 2                  ;;
-  #     *)                  printstring+=("${@[@]}"); break        ;;
-  #   esac
-  #   shift
-  # done
-  #
-  ###}}} commented out
-
 ###{{{ DOTF HELP
 
   function _dotf_version(){
