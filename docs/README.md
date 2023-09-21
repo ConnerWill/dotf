@@ -31,37 +31,67 @@ dotf [git subcommand]
 
 # OPTIONS
 
-> -a, --add, a, add <files>
-Add files to be tracked (git add)[0m
+```
+-a, --add, a, add <files>
+```
 
-> -A, A, --all, add-all
+Add files to be tracked (git add)
+
+```
+-A, A, --all, add-all
+```
+
 Add all tracked files that have been modified
 
-> -u, u, --up, --upload [message]
+```
+-u, u, --up, --upload [message]
+```
+
 Commit and push changes, including an option commit message
 
-> --fzf, fzf
+```
+--fzf, fzf
+```
+
 Run interactive dotf interface to manage repository with fzf
 
-> -- <git commands|git options>
+```
+-- <git commands|git options>
+```
+
 Run git commands
 
 
 # META OPTIONS
 
-> -h, h
+```
+-h, h
+```
+
 Show the help menu
 
-> --help, help
+```
+--help, help
+```
+
 Show the full dotf help menu
 
-> --usage, usage
+```
+--usage, usage
+```
+
 Show dotf usage
 
-> --examples, examples
+```
+--examples, examples
+```
+
 Show dotf examples
 
-> -V, --version
+```
+-V, --version
+```
+
 Show dotf version
 
 
