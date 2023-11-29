@@ -224,64 +224,64 @@ HELPMENUMOREINFO
 
 ###}}} MESSAGES
 
-  ## Full help
-	if [[ "${1}" == "--help" ]] || [[ "${1}" == "help" ]]; then
-    _dotf_help_full
-    return
 
-  ## Short help
-	elif [[ "${1}" == "-h" ]] || [[ "${1}" == "h" ]];then
-    _dotf_help_name; _dotf_help
-    printf "\nrun '%s --help' to see the full help menu\n" "${PROG}"
-    return
+  case "${1}" in
+      "--help" | "help")
+          _dotf_help_full
+          return
+          ;;
+      "-h" | "h")
+          _dotf_help_name
+          _dotf_help
+          printf "\nrun '%s --help' to see the full help menu\n" "${PROG}"
+          return
+          ;;
+      "--usage" | "usage")
+          _dotf_help_name
+          _dotf_help
+          printf "\nrun '%s --help' to see the full help menu\n" "${PROG}"
+          return
+          ;;
+      "--examples" | "examples")
+          _dotf_help_name
+          _dotf_help_examples
+          _dotf_help_more_info
+          printf "\nrun '%s --help' to see the full help menu\n" "${PROG}"
+          return
+          ;;
+      "-V" | "--version")
+          _dotf_version
+          return
+          ;;
+      "add-all" | "all" | "--all" | "A" | "-A")
+ # --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
+          ${dotf_cmd} \
+              diff --name-only \
+              | xargs -I{} sh -c \
+                  "${dotf_cmd} --git-dir=${DOTFILES} --work-tree=${HOME} add -v ${HOME}/{}"
+          ;;
+      "pull" | "p" | "pul")
+          $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
+              pull --stat --verbose
+          ;;
+      "upload" | "up" | "--up" | "--upload" | "-u" | "u")
+          $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
+              commit --status --branch --allow-empty-message --verbose -m "${2}"
+          $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
+              push --verbose
+          shift 2 # Shift 2 positions to account for the subcommand and its argument
+          ;;
+      "--fzf" | "fzf")
+          _dotf-fzf-status
+          ;;
+      *)
+          #shellcheck disable=2015
+          [[ $# -gt 0 ]] \
+              && $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" "${@}" \
+              || $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" status
+          ;;
+  esac
 
-  ## Usage
-  elif [[ "${1}" == "--usage" ]] || [[ "${1}" == "usage" ]];then
-    _dotf_help_name; _dotf_help
-    printf "\nrun '%s --help' to see the full help menu\n" "${PROG}"
-    return
-
-  ## Examples
-  elif [[ "${1}" == "--examples" ]] || [[ "${1}" == "examples" ]];then
-    _dotf_help_name; _dotf_help_examples; _dotf_help_more_info
-    printf "\nrun '%s --help' to see the full help menu\n" "${PROG}"
-    return
-
-  ## Examples
-  elif [[ "${1}" == "-V" ]] || [[ "${1}" == "--version" ]];then
-    _dotf_version
-    return
-
-  ## Add all changes
-	elif [[ "${1}" == "add-all" ]] || [[ "${1}" == "all" ]] || [[ "${1}" == "--all" ]] || [[ "${1}" == "A" ]] || [[ "${1}" == "-A" ]]; then
- 		$(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
-			diff --name-only \
-			  | xargs -I{} sh -c \
-            "$(command -v git) --git-dir=${DOTFILES} --work-tree=${HOME} add -v ${HOME}/{}"
-
-	## commit and push
-	elif [[ "${1}" == "pull" ]] || [[ "${1}" == "p" ]] || [[ "${1}" == "pul" ]]; then
-		$(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
-			pull --stat --verbose
-
-	## commit and push
-	elif [[ "${1}" == "upload" ]] || [[ "${1}" == "up" ]] || [[ "${1}" == "--up" ]] || [[ "${1}" == "--upload" ]] || [[ "${1}" == "-u" ]] || [[ "${1}" == "u" ]]; then
-		$(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
-			commit --status --branch --allow-empty-message --verbose -m "${2}"
-		$(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
-      push --verbose
-
-	## open fzf
-	elif [[ "${1}" == "--fzf" ]] || [[ "${1}" == "fzf" ]]; then
-    _dotf-fzf-status
-
-	## If args do not match above, Run subcommand. If there is no subcommand, run status
-	else
-		#shellcheck disable=2015
-		[[ $# -gt 0 ]] \
-			&& $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" "${@}" \
-			|| $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" status
-	fi
 }
 
 # Check if the script is being sourced
