@@ -215,10 +215,10 @@ HELPMENUMOREINFO
 
 ###{{{ MESSAGES
 
- _dotf_msg(){ printf "\x1B[0;1;38;5;93m[%s]\x1B[0m:\t\x1B[0m\t\x1B[0;38;5;8m%s\x1B[0m\n" "${PROG}" "$(date +%Y-%m-%d_%H:%M:%S)"; }
- _dotf_msg_commit(){ printf "\x1B[0;1;48;5;46;38;5;15m[COMMIT]\x1B[0;38;5;46m\tcommiting changes...\n"; }
- _dotf_msg_fail(){ printf "\x1B[0;1;4;48;5;196;38;5;15m[FAILED]\x1B[0m:\t\x1B[0;38;5;196m%s\n" "${@}" ; }
- _dotf_msg_error(){ printf "\x1B[0;1;4;48;5;196;38;5;15m[ERROR]\x1B[0m:\t\x1B[0;38;5;196m%s\n" "${@}" ; }
+ _dotf_msg(){ printf "${colors[bold]}${colors[Purple]}[%s]\x1B[0m:\t\x1B[0m\t\x1B[0;38;5;8m%s\x1B[0m\n" "${PROG}" "$(date +%Y-%m-%d_%H:%M:%S)"; }
+ _dotf_msg_commit(){ printf "\x1B[0;1;48;5;46m${colors[bold]}${colors[White]}[COMMIT]\x1B[0m\t${colors[Green]}commiting changes...:\t%s\n" "${@}" ; }
+ _dotf_msg_fail(){ printf "\x1B[0;1;4;48;5;196m${colors[bold]}${colors[White]}[FAILED]\x1B[0m:\t${colors[Red]}%s\n" "${@}" ; }
+ _dotf_msg_error(){ printf "\x1B[0;1;48;5;196m${colors[bold]}${colors[White]}[ERROR]\x1B[0m:\t${colors[Red]}%s\n" "${@}" ; }
 
 ###}}} MESSAGES
 
