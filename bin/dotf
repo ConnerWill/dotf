@@ -253,27 +253,25 @@ HELPMENUMOREINFO
           _dotf_version
           return
           ;;
-      "add-all" | "all" | "--all" | "A" | "-A")
+      "add-all" | "all" )
           $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
               diff --name-only \
               | xargs -I{} sh -c \
                   "$(command -v git) --git-dir=${DOTFILES} --work-tree=${HOME} add -v ${HOME}/{}"
           ;;
-      "pull" | "p" | "pul")
+      "pull" | "p" )
           $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
               pull --stat --verbose
           ;;
-      "upload" | "up" | "--up" | "--upload" | "-u" | "u")
+      "upload" | "up" )
           $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
               commit --status --branch --allow-empty-message --verbose -m "${2}"
           $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
               push --verbose
           shift 2 # Shift 2 positions to account for the subcommand and its argument
           ;;
-      "--fzf" | "fzf")
-          _dotf-fzf-status
-          ;;
       *)
+          ## If no argument passed, run git status, otherwise pass the command to git
           #shellcheck disable=2015
           [[ $# -gt 0 ]] \
               && $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" "${@}" \

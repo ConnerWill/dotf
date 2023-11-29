@@ -1,0 +1,50 @@
+#compdef dotf
+
+# The line above means "This function generates
+# completions for dotf."
+# The combination of that line, plus the file name
+# starting with an `_`, plus having this file's
+# parent dir in your `$fpath`, ensures this file
+# will be autoloaded when you call `compinit`.
+
+#shellcheck disable=2148,2168,2296
+
+# `+X` makes sure `dotf`'s definition will get
+# loaded immediately, even if you have not called
+# this function yet.
+autoload +X -Uz dotf
+
+# Get the definition of `dotf` in string form.
+local funcdef="$( type -f dotf )"
+
+_dotf() {
+  local -a subcommands
+  subcommands=(
+    "--help:Show the full help menu"
+    "-h:Show help information"
+    "--usage:Show usage information"
+    "--examples:Show usage examples"
+    "-V:Display the version"
+    "--version:Display the version"
+    "-a:Add all changes to the repository"
+    "--all:Add all changes to the repository"
+    "--add-all:Add all changes to the repository"
+    "-p:Pull changes from the repository"
+    "--pull:Pull changes from the repository"
+    "-u:Upload changes to the repository"
+    "--up:Upload changes to the repository"
+    "--upload:Upload changes to the repository"
+  )
+
+  _arguments -s -S \
+    "${subcommands[@]}" \
+    "*::file:_files"
+
+  # #shellcheck disable=2154
+  # local tag="${words[${CURRENT}]}"
+  # compadd "$(git "${tag}")"
+}
+
+_dotf "$@"
+
+compdef _dotf dotf
