@@ -14,9 +14,6 @@
 # this function yet.
 autoload +X -Uz dotf
 
-# Get the definition of `dotf` in string form.
-local funcdef="$( type -f dotf )"
-
 _dotf() {
   local -a subcommands
   subcommands=(
@@ -36,15 +33,25 @@ _dotf() {
     "--upload:Upload changes to the repository"
   )
 
-  _arguments -s -S \
-    "${subcommands[@]}" \
-    "*::file:_files"
-
-  # #shellcheck disable=2154
-  # local tag="${words[${CURRENT}]}"
-  # compadd "$(git "${tag}")"
+  #shellcheck disable=2154
+  if [[ "$#" -eq 1 && "${words[CURRENT]}" == "dotf" ]]; then
+    _arguments -s -S \
+      "${subcommands[@]}" \
+      "*::git-command:->git"
+  else
+    _arguments -s -S \
+      "${subcommands[@]}" \
+      "*::file:_files"
+  fi
 }
 
-_dotf "$@"
+# If the current command is "dotf", complete Git commands
+_dotf-git() {
+  _arguments -s \
+    "1:git-command:($(git --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" 2>/dev/null | sed -n '1,/^$/s/*\(.*\)/\1/p'))"
+}
 
+# Register the completion function
 compdef _dotf dotf
+
+_dotf "$@"
