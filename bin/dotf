@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#shellcheck disable=2148
+#shellcheck disable=2148,2059
 
 function dotf(){
   DOTFVERSION="1.0.0"
@@ -9,7 +9,7 @@ function dotf(){
 	dotf_cmd="$(command -v git) --git-dir=${DOTFILES} --work-tree=${DOTFILES_WORKTREE}"
 
   export DOTFILES DOTFILES_WORKTREE PROG
-	local dotf_cmd printstring flag_verbose fill
+	local dotf_cmd
 
 ###{{{ COLORS
 
@@ -97,17 +97,14 @@ ${colors[bold]}${colors[Blue]}USAGE${colors[reset]}
 
 ${colors[bold]}${colors[Blue]}OPTIONS${colors[reset]}
 
-    -a, --add, a, add <files>
+    add <files>
           Add files to be tracked ${colors[italic]}(git add)${colors[reset]}
 
-    -A, A, --all, add-all
+    add-all, --add-all, all, --all
           Add all tracked files that have been modified
 
     -u, u, --up, --upload [message]
           Commit and push changes, including an option commit message
-
-    --fzf, fzf
-          Run interactive dotf interface to manage repository with fzf
 
     -- <git commands|git options>
           Run git commands
@@ -253,7 +250,7 @@ HELPMENUMOREINFO
           _dotf_version
           return
           ;;
-      "add-all" | "all" )
+      "add-all" | "all" | "--all" | "--add-all" )
           $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
               diff --name-only \
               | xargs -I{} sh -c \
