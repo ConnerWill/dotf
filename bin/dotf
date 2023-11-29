@@ -218,6 +218,7 @@ HELPMENUMOREINFO
  _dotf_msg(){ printf "\x1B[0;1;38;5;93m[%s]\x1B[0m:\t\x1B[0m\t\x1B[0;38;5;8m%s\x1B[0m\n" "${PROG}" "$(date +%Y-%m-%d_%H:%M:%S)"; }
  _dotf_msg_commit(){ printf "\x1B[0;1;48;5;46;38;5;15m[COMMIT]\x1B[0;38;5;46m\tcommiting changes...\n"; }
  _dotf_msg_fail(){ printf "\x1B[0;1;4;48;5;196;38;5;15m[FAILED]\x1B[0m:\t\x1B[0;38;5;196m%s\n" "${@}" ; }
+ _dotf_msg_error(){ printf "\x1B[0;1;4;48;5;196;38;5;15m[ERROR]\x1B[0m:\t\x1B[0;38;5;196m%s\n" "${@}" ; }
 
 ###}}} MESSAGES
 
@@ -270,9 +271,11 @@ HELPMENUMOREINFO
       *)
           ## If no argument passed, run git status, otherwise pass the command to git
           #shellcheck disable=2015
-          [[ $# -gt 0 ]] \
-              && $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" "${@}" \
-              || $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" status
+          if [[ $# -gt 0 ]]; then
+            $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" "${@}" || _dotf_msg_error "Could not run subcommand: ${*}"
+          else
+            $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" status
+          fi
           ;;
   esac
 
