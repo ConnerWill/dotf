@@ -1,0 +1,40 @@
+#compdef dotf
+
+# The line above means "This function generates
+# completions for dotf."
+# The combination of that line, plus the file name
+# starting with an `_`, plus having this file's
+# parent dir in your `$fpath`, ensures this file
+# will be autoloaded when you call `compinit`.
+
+#shellcheck disable=2148,2168,2296
+
+# `+X` makes sure `dotf`'s definition will get
+# loaded immediately, even if you have not called
+# this function yet.
+autoload +X -Uz dotf
+
+# Get the definition of `dotf` in string form.
+local funcdef="$( type -f dotf )"
+
+# Get the part that matches `case*esac`, then split
+# it on whitespace and put the resulting words in an
+# array.
+local -a words=( ${=funcdef[(r)case,(r)esac]} )
+
+# Keep only the words that start with `(` and end
+# with `)`.
+# Even if you used the `case` syntax with only the
+# closing `)`s, `type -f` will show your cases with
+# both `(` and `)`.
+local -a required=( ${(M)words:#'('*')'} )
+
+# `-s`: Allow options to `dotf ` to be stacked,
+# that is, you are allowed to specify `dotf -rm`.
+# If not, remove the `-s` option.
+# `*:`: Let this argument be completed in any
+# position.
+_arguments -s \
+    {-r,--readonly}'[description for "readonly"]' \
+    {-m,--mount}'[description for "mount"]' \
+    "*:required argument:( ${required//[()]/}  )"

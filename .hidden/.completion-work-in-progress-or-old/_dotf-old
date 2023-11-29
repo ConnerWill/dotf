@@ -1,0 +1,5 @@
+_dotf() {
+    local tag="${words[$CURRENT]}"
+    compadd $(git $tag)
+}
+compdef _dotf dotf

@@ -33,19 +33,19 @@ _dotf() {
     "--upload:Upload changes to the repository"
   )
 
-  #shellcheck disable=2154
-  if [[ "$#" -eq 1 && "${words[CURRENT]}" == "dotf" ]]; then
+  if [[ "$#" -eq 0 ]]; then
     _arguments -s -S \
       "${subcommands[@]}" \
       "*::git-command:->git"
   else
     _arguments -s -S \
       "${subcommands[@]}" \
-      "*::file:_files"
+      "*::git-command:->git"
+      # "*::file:_files"
   fi
 }
 
-# If the current command is "dotf", complete Git commands
+# If no arguments are provided to `dotf`, complete Git commands and options
 _dotf-git() {
   _arguments -s \
     "1:git-command:($(git --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" 2>/dev/null | sed -n '1,/^$/s/*\(.*\)/\1/p'))"
