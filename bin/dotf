@@ -254,11 +254,10 @@ HELPMENUMOREINFO
           return
           ;;
       "add-all" | "all" | "--all" | "A" | "-A")
- # --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
-          ${dotf_cmd} \
+          $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
               diff --name-only \
               | xargs -I{} sh -c \
-                  "${dotf_cmd} --git-dir=${DOTFILES} --work-tree=${HOME} add -v ${HOME}/{}"
+                  "$(command -v git) --git-dir=${DOTFILES} --work-tree=${HOME} add -v ${HOME}/{}"
           ;;
       "pull" | "p" | "pul")
           $(command -v git) --git-dir="${DOTFILES}" --work-tree="${DOTFILES_WORKTREE}" \
