@@ -1,0 +1,169 @@
+.nh
+.TH NAME
+.PP
+\fBdotf\fP
+
+
+.SH DESCRIPTION
+.PP
+Manage, backup, develop, sync your .dotfiles with ease
+
+
+.SH USAGE
+.EX
+dotf [-AapufhV] [-a|a|--add|add <files>] [-A|A|--all|all|add-all]
+     [-u|u|--up|up|--upload|upload [message]] [--fzf|fzf]
+     [-h|h] [--help|help] [-V|--version] [-- <git command|git options>]]
+
+.EE
+
+.EX
+dotf [-AapufhV]
+
+.EE
+
+.EX
+dotf [options] [-- <git command|git options>]
+
+.EE
+
+.EX
+dotf [git subcommand]
+
+.EE
+
+
+.SH OPTIONS
+.EX
+-a, --add, a, add <files>
+
+.EE
+
+.PP
+Add files to be tracked \fI(git add)\fP
+
+.EX
+-A, A, --all, add-all
+
+.EE
+
+.PP
+Add all tracked files that have been modified
+
+.EX
+-u, u, --up, --upload [message]
+
+.EE
+
+.PP
+Commit and push changes, including an option commit message
+
+.EX
+-- <git commands|git options>
+
+.EE
+
+.PP
+Run git commands
+
+
+.SH META OPTIONS
+.EX
+-h, h
+
+.EE
+
+.PP
+Show the help menu
+
+.EX
+--help, help
+
+.EE
+
+.PP
+Show the full \fBdotf\fP help menu
+
+.EX
+--usage, usage
+
+.EE
+
+.PP
+Show \fBdotf\fP usage
+
+.EX
+--examples, examples
+
+.EE
+
+.PP
+Show \fBdotf\fP examples
+
+.EX
+-V, --version
+
+.EE
+
+.PP
+Show \fBdotf\fP version
+
+
+.SH EXAMPLES
+.PP
+Running '\fBdotf\fP\&' with no subcommands, options, or arguments
+will show the current status of the repository: *(Equivalent to running: '\fBdotf\fP status')*
+
+.EX
+$  dotf
+
+.EE
+
+.PP
+Adding all modified files currently checked into \fBdotf\fP\&.
+It will not add new files that are not being tracked.
+
+.EX
+$  dotf add-all
+
+.EE
+
+.PP
+These next two command will do the exact same thing.
+Showing you how the subcommands/options can be used.
+
+.PP
+These examples will commit and push changes to the remote repository
+with a commit message of '\fIAdded help menu to function\fP\&'
+
+.EX
+$  dotf upload 'Added help menu to function'
+
+.EE
+
+.EX
+$  dotf --upload='Added help menutofunctinon'
+
+.EE
+
+.PP
+This little command is a shorthand way of running multiple commands
+to add all modified files that are checked into \fBdotf\fP, commit changes
+with a commit message of '\fIExpanded help menu\fP\&', and then pushing to the remote.
+
+.EX
+$  dotf a && dotf 'Expanded help menu'
+
+.EE
+
+
+.SH MORE
+.PP
+For more information, view the README on the dotf repository
+\[la]https://github.com/connerwill/dotf\[ra]
+
+.RS
+.IP \(bu 2
+\fIhttps://github.com/connerwill/dotf\fP
+
+.RE
