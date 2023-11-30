@@ -2,7 +2,7 @@
 #shellcheck disable=2148,2059
 
 function dotf(){
-  DOTFVERSION="1.0.0"
+  DOTFVERSION="1.0.1"
 	DOTFILES="${DOTFILES:-${HOME}/.dotfiles}"
 	DOTFILES_WORKTREE="${DOTFILES_WORKTREE:-${HOME}}"
   PROG="dotf"
